@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-
-export class Search extends Component {
+import PropTypes from "prop-types";
+class Search extends Component {
   //Component level state
   state = {
     text: ""
   };
 
+  PropTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired
+  };
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -15,6 +19,7 @@ export class Search extends Component {
     this.props.searchUsers(this.state.text);
     this.setState({ text: "" });
   };
+
   render() {
     return (
       <div>
@@ -32,6 +37,12 @@ export class Search extends Component {
             className="btn btn-dark btn-block"
           />
         </form>
+        <button
+          className="btn btn-light btn-block"
+          onClick={this.props.clearUsers}
+        >
+          Clear
+        </button>
       </div>
     );
   }
