@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const Search = props => {
+const Search = ({ setAlert, searchUsers, showClear, clearUsers }) => {
   const [text, setText] = useState("");
 
   const onChange = event => {
@@ -11,9 +11,9 @@ const Search = props => {
   const onSubmit = event => {
     event.preventDefault();
     if (text === "") {
-      props.setAlert("Please enter something!", "light");
+      setAlert("Please enter something!", "light");
     } else {
-      props.searchUsers(text);
+      searchUsers(text);
       setText("");
     }
   };
@@ -34,8 +34,8 @@ const Search = props => {
           className="btn btn-dark btn-block"
         />
       </form>
-      {props.showClear && (
-        <button className="btn btn-light btn-block" onClick={props.clearUsers}>
+      {showClear && (
+        <button className="btn btn-light btn-block" onClick={clearUsers}>
           Clear
         </button>
       )}
@@ -45,7 +45,8 @@ const Search = props => {
 Search.propTypes = {
   searchUsers: PropTypes.func.isRequired,
   clearUsers: PropTypes.func.isRequired,
-  showClear: PropTypes.bool.isRequired
+  showClear: PropTypes.bool.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 export default Search;
