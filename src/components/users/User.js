@@ -1,17 +1,21 @@
 import React, { Fragment, Component } from "react";
 import Spinner from "../layouts/Spinner";
 import PropTypes from "prop-types";
+import Repos from "../repos/Repos";
 import { Link } from "react-router-dom";
 
 export class User extends Component {
   componentDidMount() {
     this.props.getUser(this.props.match.params.login);
+    this.props.getUserRepos(this.props.match.params.login);
   }
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
-    getUser: PropTypes.func.isRequired
+    repos: PropTypes.array.isRequired,
+    getUser: PropTypes.func.isRequired,
+    getUserRepos: PropTypes.func.isRequired
   };
 
   render() {
@@ -33,6 +37,9 @@ export class User extends Component {
 
     return (
       <Fragment>
+        <Link to="/" className="btn btn-regular">
+          Back
+        </Link>
         Hireable : {""}
         {hireable ? (
           <i className="fa fa-check text-success" />
@@ -48,7 +55,12 @@ export class User extends Component {
               style={{ width: "150px" }}
             />
             <h1>{name}</h1>
-            <p>{location}</p>
+            {location && (
+              <Fragment>
+                <i className="fa fa-map-marker" />
+                <p>{location}</p>
+              </Fragment>
+            )}
           </div>
           <div>
             {login && (
@@ -76,9 +88,7 @@ export class User extends Component {
           <div className="badge badge-light">Public Repos : {public_repos}</div>
           <div className="badge badge-dark">Public Gists : {public_gists}</div>
         </div>
-        <Link to="/" className="btn btn-dark">
-          Back
-        </Link>
+        <Repos repos={this.props.repos} />
       </Fragment>
     );
   }
