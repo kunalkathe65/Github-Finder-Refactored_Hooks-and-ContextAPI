@@ -1,0 +1,7 @@
+sudo:required
+services:
+  - docker
+before-install:
+  - docker build -t kunalkathe/React-Github-Project-Docker -f Dockerfile.dev .
+scripts:
+  - docker run kunalkathe/React-Github-Project-Docker npm run test -- --coverage
